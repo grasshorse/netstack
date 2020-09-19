@@ -1,3 +1,4 @@
+[documents index](../../)
 # netstack wide area network (wan) domain setup
 
 Current default netstack proceedure for public domain interface setup.
@@ -35,7 +36,7 @@ Current default netstack proceedure for public domain interface setup.
   - Add a [README.md](https://github.com/2cld/netstack/blob/master/README.md)
   - Add file [CNAME](https://github.com/2cld/netstack/blob/master/CNAME) with the domain
   - Enable [github pages custom domain](https://docs.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site)
-  - Browse your domain to view static website info [https://netstack.org/](https://netstack.org/]
+  - Browse your domain to view static website info [https://netstack.org/](https://netstack.org/)
 3. Create site reference documents
   - Add file [docs/README.md](https://github.com/2cld/netstack/blob/master/docs/README.md) to repo [https://github.com/2cld/netstack](https://github.com/2cld/netstack)
   - Repeat with additional public proceedural documentation
