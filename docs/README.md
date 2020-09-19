@@ -1,8 +1,16 @@
 # Documents for netstack.org
 
-## Network WAN
+## WAN [wan overview](./wan/)
+### Network WAN
 - [Network Domain Setup](./wan/domain/)
 
-## Network LAN
+
+## LAN [lan overview](./lan/)
+### Network LAN
 - [Network LAN IPAM Subnets](./lan/ipam/)
-- [Network Storage Setup](./lan/storage/)
+
+### Storage LAN
+- [Storage LAN Setup](./lan/storage/)
+
+### Compute LAN
+- [Compute LAN Setup](./lan/compute/)
