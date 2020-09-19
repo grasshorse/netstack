@@ -3,6 +3,8 @@
 ## WAN [overview](./wan/)
 ### Network WAN
 - [Network Domain Setup](./wan/domain/)
+- [OpenVPN](./wan/openvpn/)
+- [zerotier](./wan/zerotier/)
 
 
 ## LAN [overview](./lan/)
