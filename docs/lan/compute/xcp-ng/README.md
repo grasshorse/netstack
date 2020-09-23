@@ -34,8 +34,8 @@
   - [Windows xenadmin Client XOA github](https://github.com/xcp-ng/xenadmin/releases/) NOTE: Not good with 8.1 and is lacking upgrades
   - XOA build from source [Tutorial - How To Build Xen Orchestra From Source Using XenOrchestraInstallerUpdater](https://www.youtube.com/watch?v=lf_tNVomBcE)
 
-## [Create local ISO repository](https://github.com/xcp-ng/xcp/wiki/Create-a-local-ISO-repository) [LT-video](https://youtu.be/q-jKs62b6Co?t=903)
-1. ssh to ng01 server create Local_ISO directory and pull down [small debian](https://www.debian.org/distrib/netinst)
+## Create local ISO repository [xcp-ng doc](https://github.com/xcp-ng/xcp/wiki/Create-a-local-ISO-repository) 
+1. ssh to ng01 server create Local_ISO directory and pull down [small debian](https://www.debian.org/distrib/netinst) [LT-video](https://youtu.be/q-jKs62b6Co?t=903)
     ```bash
       [08:20 nsg01 ~]# cd /
       [08:55 nsg01 /]# mkdir Local_ISO
@@ -70,6 +70,16 @@
     - Click Create
 3. Verify iso [XOA - Home - Storages - Local ISO - Disk](https://192.168.2.97/#/srs/ae836939-3ce9-b95a-d7fa-119d9237986d/disks) to verify debian iso
 
+## Add Remote Storage
+1. Go to [XOA - New - Storage](https://192.168.2.97/#/new/sr) and create FreeNAS NFS storage [LT-video](https://youtu.be/q-jKs62b6Co?t=1190)
+    - Host: nsg01
+    - Name: FreeNAS NFS
+    - Description: FreeNAS NFS storage on local network
+    - Select Storge Type: VDI SR - NFS
+    - Server: 192.168.2.83
+    - Path: (should query the server) /mnt/nspool/
+    - Click Create
+ 
 ### Add Local Disks
   - Install a hard drive on a XenServer.
   - Run the following command from the command line interface to display the installed disks:
