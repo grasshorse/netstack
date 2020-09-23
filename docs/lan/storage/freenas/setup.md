@@ -37,12 +37,33 @@
   - Give Write to Group and Other
   - Apply Permissions Recursively
   - Save
-4. Create NFS share [Sharing - NFS - Add](http://192.168.2.83/ui/sharing/nfs/add) [LT-video](https://youtu.be/k_gvwU15EyE?t=117)
+4. Enable NFS Service [Services - NFS - Edit](http://192.168.2.83/ui/services/nfs) [LT-video](https://youtu.be/k_gvwU15EyE?t=222)
+  - Number of servers: 4 (each takes 1 core)
+  - Allow no-root mount: Checked
+  - Enable NFSv4: Checked
+  - Restart NFS Service
+5. Turn off NFS Sync for each Dataset ZFS performance issue [LT-Video](https://youtu.be/k_gvwU15EyE?t=254)
+```bash
+root@freenas[/mnt/nspool]# ls
+NFS_ISO_Share	Projects
+root@freenas[/mnt/nspool]# zfs set sync=disabled nspool/Projects
+root@freenas[/mnt/nspool]# zfs set sync=disabled nspool/NFS_ISO_Share
+root@freenas[/mnt/nspool]# 
+```
+6. Create NFS share [Sharing - NFS - Add](http://192.168.2.83/ui/sharing/nfs/add) [LT-video](https://youtu.be/k_gvwU15EyE?t=117)
+  - Path: /mnt/nspool/Projects
+  - All dirs (checked)
+  - Enabled (checked)
+  - Advanced: Security: sys
+  - Save
+7. Create NFS share [Sharing - NFS - Add](http://192.168.2.83/ui/sharing/nfs/add) [LT-video](https://youtu.be/k_gvwU15EyE?t=117)
   - Path: /mnt/nspool/NFS_ISO_Share
   - All dirs (checked)
   - Enabled (checked)
+  - Advanced: Security: sys
   - Save
-
+8. Add the NFS share to your [xcp-ng server](../../compute/xcp-ng/)
+  
 ## Reference
 - [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) 
 - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
