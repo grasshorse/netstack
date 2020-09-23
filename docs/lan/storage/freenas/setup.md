@@ -1,6 +1,6 @@
 # freeNAS configuration
 
-## freeNAS install [FreeNAS 11.3 download](https://www.freenas.org/download-freenas-release/) [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
+## freeNAS install 
 1. Create freeNAS install USB thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
 2. Insert freeNAS install USB and a USB boot target
 3. Install...
@@ -15,14 +15,38 @@
   - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
 4. Confirm Create (will delete all data)
 5. Add S.M.A.R.T. Test schedule to drives
+  - monthly
 6. Add SCRUB schedule to drives
+  - monthly
 
-## freeNAS Dataset Configuration
-1. In Storage / Pools -> nspool -> Add Dataset
-  - Name: projects
-  - Comments: projects dataset on nspool
+## freeNAS NFS Share Dataset Configuration
+1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.2.83/ui/storage/pools/status/1)
+2. Add NFS_ISO_Share [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
+  - Name: NFS_ISO_Share
+  - Comments: NFS ISO files for LAN Share
+  - Sync: Inherit (standard)
+  - Leave rest default
+  - SAVE
+2. Add Projects [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
+  - Name: Projects
+  - Comments: Projects share directory
+  - Sync: Inherit (standard)
+  - Leave rest default
+  - SAVE
+3. Edit Permissions on Projects Dataset [LT-video](https://youtu.be/k_gvwU15EyE?t=101)
+  - Give Write to Group and Other
+  - Apply Permissions Recursively
+  - Save
+4. Create NFS share [Sharing - NFS - Add](http://192.168.2.83/ui/sharing/nfs/add) [LT-video](https://youtu.be/k_gvwU15EyE?t=117)
+  - Path: /mnt/nspool/NFS_ISO_Share
+  - All dirs (checked)
+  - Enabled (checked)
+  - Save
 
 ## Reference
+- [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) 
+- [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
+- [FreeNAS 11.3 download](https://www.freenas.org/download-freenas-release/) 
 - [youtube - FreeNAS Smart Tests and Scrub Tests](https://www.youtube.com/watch?v=w0ZKuXN1AVM&vl=en)
 - [youtube - How to Check SMART Information in FreeNAS](https://www.youtube.com/watch?v=PyBqahRsXwY)
 - [youtube - tbd]()
