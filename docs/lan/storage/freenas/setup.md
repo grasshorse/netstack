@@ -1,20 +1,36 @@
 # freeNAS configuration for ghrender
 
-## freeNAS install [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
-1. Use freeNAS install USB thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
-2. Install...
+## freeNAS install [FreeNAS 11.3 download](https://www.freenas.org/download-freenas-release/) [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
+1. Create freeNAS install USB thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
+2. Insert freeNAS install USB and a USB boot target
+3. Install...
+4. Pull freeNAS install USB and reboot
 
 ## freeNAS Storage Pool Config
 1. Login to FreeNAS (root - yoursecurepassword)
-2. From FreeNAS Dashboard -> Storage -> Pools -> Create
+2. View Dashboard check for any notifications
+3. From FreeNAS Dashboard -> Storage -> Pools -> Add -> Create new pool
   - Name: nspool
-  - Type: raidz
-  - Add Drives (the 4 disks) -> Set to raidz (default is raidz2)
-3. Confirm Create
-5. In Storage / Pools -> nspool -> Add Dataset
+  - Type: raidz2
+  - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
+4. Confirm Create (will delete all data)
+5. Add S.M.A.R.T. Test schedule to drives
+6. Add SCRUB schedule to drives
+
+## freeNAS Dataset Configuration
+1. In Storage / Pools -> nspool -> Add Dataset
   - Name: projects
   - Comments: projects dataset on nspool
-5. In Services -> Enable NFS and Start Automatically
+
+## Reference
+- [youtube - FreeNAS Smart Tests and Scrub Tests](https://www.youtube.com/watch?v=w0ZKuXN1AVM&vl=en)
+- [youtube - How to Check SMART Information in FreeNAS](https://www.youtube.com/watch?v=PyBqahRsXwY)
+- [youtube - tbd]()
+- [youtube - Lawrence Systems - Open Source File Sync: Getting Started Tutorial With Syncthing on Windows & Linux](https://www.youtube.com/watch?v=O5O4ajGWZz8)
+- [youtube - Lawrence Systems - Why We Use Syncthing, The Open Source Private File Syncing Tool instead of NextCloud](https://www.youtube.com/watch?v=bNiiJe8NpEw)
+- [youtube - Lawrence Systems - FreeNAS 11 Rsync Server Setup](https://www.youtube.com/watch?v=Qhlp18QTUTo&t=359s)
+- [youtube - tbd]()
+- [youtube - tbd]()
 
 ## Hindsight Jail
 1. From FreeNAS Dashboard -> Jails -> ADD
