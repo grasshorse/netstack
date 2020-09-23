@@ -1,4 +1,4 @@
-# freeNAS configuration for ghrender
+# freeNAS configuration
 
 ## freeNAS install [FreeNAS 11.3 download](https://www.freenas.org/download-freenas-release/) [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
 1. Create freeNAS install USB thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
