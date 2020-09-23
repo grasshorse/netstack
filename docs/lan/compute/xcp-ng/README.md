@@ -8,20 +8,20 @@
   - IP: DHCP (MAC tied to IP via DHCP later)
 2. GUI Admin
   - ssh into system and yum update reboot [LT-video](https://youtu.be/q-jKs62b6Co?t=678)
-    ```bash
-      cat@cats-Mac-mini ~ % ssh root@192.168.2.38
-      root@192.168.2.38's password: 
-      Last login: Tue Sep 22 21:34:28 2020 from cats-mac-mini
-      [08:19 nsg01 ~]# yum upgrade
-      Loaded plugins: fastestmirror
-      Loading mirror speeds from cached hostfile
-      Excluding mirror: updates.xcp-ng.org
-       * xcp-ng-base: mirrors.xcp-ng.org
-      Excluding mirror: updates.xcp-ng.org
-       * xcp-ng-updates: mirrors.xcp-ng.org
-      No packages marked for update
-      [08:20 nsg01 ~]# shutdown -r now
-    ```
+```bash
+cat@cats-Mac-mini ~ % ssh root@192.168.2.38
+root@192.168.2.38's password: 
+Last login: Tue Sep 22 21:34:28 2020 from cats-mac-mini
+[08:19 nsg01 ~]# yum upgrade
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+Excluding mirror: updates.xcp-ng.org
+ * xcp-ng-base: mirrors.xcp-ng.org
+Excluding mirror: updates.xcp-ng.org
+ * xcp-ng-updates: mirrors.xcp-ng.org
+No packages marked for update
+[08:20 nsg01 ~]# shutdown -r now
+```
   - Checkout the console
   ```bash
     [08:20 nsg01 ~]# xsconsole
