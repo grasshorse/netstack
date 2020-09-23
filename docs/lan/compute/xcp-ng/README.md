@@ -1,20 +1,76 @@
 [documents index](../../../)
 # xcp-ng
 
-# XenServer Config
-
-# Quick Start notes
-1. Use Install XCP-ng 8.1 USB key to boot and install
+## Install server
+1. Use Install [xcp-ng Homepage](https://xcp-ng.org/) USB key to boot and install
   - Server Name: nsgXX
-  - Special: xxXCP#xxxx
-  - IP: DHCP (MAC tied to IP 192.168.1.120+Blade#)
+  - Special: xxxx#xxxxst
+  - IP: DHCP (MAC tied to IP via DHCP later)
 2. GUI Admin
+  - ssh into system and yum update reboot [LT-video](https://youtu.be/q-jKs62b6Co?t=678)
+    ```bash
+      cat@cats-Mac-mini ~ % ssh root@192.168.2.38
+      root@192.168.2.38's password: 
+      Last login: Tue Sep 22 21:34:28 2020 from cats-mac-mini
+      [08:19 nsg01 ~]# yum upgrade
+      Loaded plugins: fastestmirror
+      Loading mirror speeds from cached hostfile
+      Excluding mirror: updates.xcp-ng.org
+       * xcp-ng-base: mirrors.xcp-ng.org
+      Excluding mirror: updates.xcp-ng.org
+       * xcp-ng-updates: mirrors.xcp-ng.org
+      No packages marked for update
+      [08:20 nsg01 ~]# shutdown -r now
+    ```
+  - Checkout the console
+  ```bash
+    [08:20 nsg01 ~]# xsconsole
+  ```
   - [XOA Appliance install](https://youtu.be/mp-pCgYszqU?t=305)
     ```bash
       bash -c "$(curl -s http://xoa.io/deploy)"
     ```
-  - [Windows xenadmin Client XOA github](https://github.com/xcp-ng/xenadmin/releases/)
-3. Local Storage
+  - XOA Quick Deploy [https://192.168.2.38](https://192.168.2.38) go to the just installed servers webpage [LT-video](https://youtu.be/q-jKs62b6Co?t=792)
+  - [Windows xenadmin Client XOA github](https://github.com/xcp-ng/xenadmin/releases/) NOTE: Not good with 8.1 and is lacking upgrades
+  - XOA build from source [Tutorial - How To Build Xen Orchestra From Source Using XenOrchestraInstallerUpdater](https://www.youtube.com/watch?v=lf_tNVomBcE)
+
+## [Create local ISO repository](https://github.com/xcp-ng/xcp/wiki/Create-a-local-ISO-repository) [LT-video](https://youtu.be/q-jKs62b6Co?t=903)
+1. ssh to ng01 server create Local_ISO directory and pull down [small debian](https://www.debian.org/distrib/netinst)
+    ```bash
+      [08:20 nsg01 ~]# cd /
+      [08:55 nsg01 /]# mkdir Local_ISO
+      [08:55 nsg01 /]# cd Local_ISO/
+      [08:55 nsg01 Local_ISO]# pwd
+      /Local_ISO
+      [09:11 nsg01 Local_ISO]# wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+      --2020-09-23 09:14:15--  https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+      Resolving cdimage.debian.org (cdimage.debian.org)... 194.71.11.173, 194.71.11.165, 2001:6b0:19::173, ...
+      Connecting to cdimage.debian.org (cdimage.debian.org)|194.71.11.173|:443... connected.
+      HTTP request sent, awaiting response... 302 Found
+      Location: https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso [following]
+      --2020-09-23 09:14:16--  https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+      Resolving caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)... 194.71.11.142, 2001:6b0:19::142
+      Connecting to caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)|194.71.11.142|:443... connected.
+      HTTP request sent, awaiting response... 200 OK
+      Length: 365953024 (349M) [application/x-iso9660-image]
+      Saving to: ‘debian-10.5.0-amd64-netinst.iso’
+
+      100%[================================================================================================================================>] 365,953,024 7.18MB/s   in 29s    
+
+      2020-09-23 09:14:47 (12.2 MB/s) - ‘debian-10.5.0-amd64-netinst.iso’ saved [365953024/365953024]
+
+      [09:14 nsg01 Local_ISO]#
+    ```
+2. Go to [XOA - New - Storage](https://192.168.2.97/#/new/sr) and create Local ISO storage [LT-video](https://youtu.be/q-jKs62b6Co?t=1015)
+    - Host: nsg01
+    - Name: Local ISO
+    - Description: Small ISO storage for server bootstrap
+    - Select Storge Type: ISO SR - Local
+    - Path: /Local_ISO
+    - Click Create
+3. Verify iso [XOA - Home - Storages - Local ISO - Disk](https://192.168.2.97/#/srs/ae836939-3ce9-b95a-d7fa-119d9237986d/disks) to verify debian iso
+
+### Add Local Disks
   - Install a hard drive on a XenServer.
   - Run the following command from the command line interface to display the installed disks:
     ```bash
@@ -72,6 +128,7 @@
 ## Notes
 - [xcp-ng Homepage](https://xcp-ng.org/)
 - [xcp-ng Github](https://github.com/xcp-ng/xcp)
+- [xen-orchestra - architecture](https://xen-orchestra.com/docs/architecture.html)
 - [xcp-ng Guest Tools](https://github.com/xcp-ng/xcp/wiki/Guest-Tools)
 - [xcp-ng Graphical Client](https://github.com/xcp-ng/xenadmin/releases/)
 - [xcp-ng iso 8.1 Download](http://mirrors.xcp-ng.org/isos/8.1/xcp-ng-8.1.0-2.iso)
@@ -101,7 +158,7 @@
 - [Tutorial - How to add additional hard disk in xenserver](https://www.youtube.com/watch?v=HgjfQKr6u1w)
 - [Tutorial - Xenserver Hard Drive Whole Disk Passthrough with XCP-NG](https://www.youtube.com/watch?v=vSDDMIG6Huk)
 - [Tutorial - Citrix Xenserver Adding A Hard Drive](https://www.youtube.com/watch?v=gNLBNUHI1uE)
-- [Tutorial - ]()
+- [Tutorial - How To Build Xen Orchestra From Source Using XenOrchestraInstallerUpdater](https://www.youtube.com/watch?v=lf_tNVomBcE)
 
 
 ### Setup disk on hsg03
