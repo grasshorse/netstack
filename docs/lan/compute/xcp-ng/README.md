@@ -23,44 +23,41 @@ No packages marked for update
 [08:20 nsg01 ~]# shutdown -r now
 ```
   - Checkout the console
-  ```bash
-    [08:20 nsg01 ~]# xsconsole
-  ```
+```bash
+[08:20 nsg01 ~]# xsconsole
+```
   - [XOA Appliance install](https://youtu.be/mp-pCgYszqU?t=305)
-    ```bash
-      bash -c "$(curl -s http://xoa.io/deploy)"
-    ```
+```bash
+bash -c "$(curl -s http://xoa.io/deploy)"
+```
   - XOA Quick Deploy [https://192.168.2.38](https://192.168.2.38) go to the just installed servers webpage [LT-video](https://youtu.be/q-jKs62b6Co?t=792)
   - [Windows xenadmin Client XOA github](https://github.com/xcp-ng/xenadmin/releases/) NOTE: Not good with 8.1 and is lacking upgrades
   - XOA build from source [Tutorial - How To Build Xen Orchestra From Source Using XenOrchestraInstallerUpdater](https://www.youtube.com/watch?v=lf_tNVomBcE)
 
 ## Create local ISO repository [xcp-ng doc](https://github.com/xcp-ng/xcp/wiki/Create-a-local-ISO-repository) 
 1. ssh to ng01 server create Local_ISO directory and pull down [small debian](https://www.debian.org/distrib/netinst) [LT-video](https://youtu.be/q-jKs62b6Co?t=903)
-    ```bash
-      [08:20 nsg01 ~]# cd /
-      [08:55 nsg01 /]# mkdir Local_ISO
-      [08:55 nsg01 /]# cd Local_ISO/
-      [08:55 nsg01 Local_ISO]# pwd
-      /Local_ISO
-      [09:11 nsg01 Local_ISO]# wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
-      --2020-09-23 09:14:15--  https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
-      Resolving cdimage.debian.org (cdimage.debian.org)... 194.71.11.173, 194.71.11.165, 2001:6b0:19::173, ...
-      Connecting to cdimage.debian.org (cdimage.debian.org)|194.71.11.173|:443... connected.
-      HTTP request sent, awaiting response... 302 Found
-      Location: https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso [following]
-      --2020-09-23 09:14:16--  https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
-      Resolving caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)... 194.71.11.142, 2001:6b0:19::142
-      Connecting to caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)|194.71.11.142|:443... connected.
-      HTTP request sent, awaiting response... 200 OK
-      Length: 365953024 (349M) [application/x-iso9660-image]
-      Saving to: ‘debian-10.5.0-amd64-netinst.iso’
-
-      100%[================================================================================================================================>] 365,953,024 7.18MB/s   in 29s    
-
-      2020-09-23 09:14:47 (12.2 MB/s) - ‘debian-10.5.0-amd64-netinst.iso’ saved [365953024/365953024]
-
-      [09:14 nsg01 Local_ISO]#
-    ```
+```bash
+[08:20 nsg01 ~]# cd /
+[08:55 nsg01 /]# mkdir Local_ISO
+[08:55 nsg01 /]# cd Local_ISO/
+[08:55 nsg01 Local_ISO]# pwd
+/Local_ISO
+[09:11 nsg01 Local_ISO]# wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+--2020-09-23 09:14:15--  https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+Resolving cdimage.debian.org (cdimage.debian.org)... 194.71.11.173, 194.71.11.165, 2001:6b0:19::173, ...
+Connecting to cdimage.debian.org (cdimage.debian.org)|194.71.11.173|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso [following]
+--2020-09-23 09:14:16--  https://caesar.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso
+Resolving caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)... 194.71.11.142, 2001:6b0:19::142
+Connecting to caesar.ftp.acc.umu.se (caesar.ftp.acc.umu.se)|194.71.11.142|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 365953024 (349M) [application/x-iso9660-image]
+Saving to: ‘debian-10.5.0-amd64-netinst.iso’
+100%[================================================================================================================================>] 365,953,024 7.18MB/s in 29s 
+2020-09-23 09:14:47 (12.2 MB/s) - ‘debian-10.5.0-amd64-netinst.iso’ saved [365953024/365953024]
+[09:14 nsg01 Local_ISO]#
+```
 2. Go to [XOA - New - Storage](https://192.168.2.97/#/new/sr) and create Local ISO storage [LT-video](https://youtu.be/q-jKs62b6Co?t=1015)
     - Host: nsg01
     - Name: Local ISO
@@ -83,53 +80,53 @@ No packages marked for update
 ### Add Local Disks
   - Install a hard drive on a XenServer.
   - Run the following command from the command line interface to display the installed disks:
-    ```bash
-      fdisk -l
-      lsblk
-    ```
+```bash
+fdisk -l
+lsblk
+```
   - Inspect the disks partitions
-    ```bash
-      cfdisk /dev/sdc
-    ```
+```bash
+cfdisk /dev/sdc
+```
   - List the xen server ID
-    ```bash
-      xe host-list
-    ```
+```bash
+xe host-list
+```
   - Run the following command from the command line interface:
-    ```bash
-      xe sr-create host-uuid<hostid> name-label=<nameLabel> shared=false device-config:device=<devicePath> type=lvm content-type=user
-    ```
+```bash
+xe sr-create host-uuid<hostid> name-label=<nameLabel> shared=false device-config:device=<devicePath> type=lvm content-type=user
+```
     - hostID: is shown by xe host-list (just tab if your on the server)
     - nameLabel: is the display name used in XCP-ng
     - devicePath:  shown in fdisk -l or lsblk /dev/sdc
   - Example I ran on hsg04
-    ```bash
-    xe sr-create host-uuid=7749xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxb0 name-label-"hsg04d2" shared=false device-config=/dev/sdb type=lvm content-type=user
-    ```
+```bash
+xe sr-create host-uuid=7749xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxb0 name-label-"hsg04d2" shared=false device-config=/dev/sdb type=lvm content-type=user
+```
 4. Pass-through Storage
   - Run the following command from the command line interface to display the installed disks:
-    ```bash
-      lsblk
-    ```
+```bash
+lsblk
+```
   - Inspect the disks partitions delete partitions you want to re-use
-    ```bash
-      cfdisk /dev/sdc
-    ```
+```bash
+cfdisk /dev/sdc
+```
   - List the xen server ID
-    ```bash
-      xe host-list
-    ```
+```bash
+xe host-list
+```
   - Make directory with symlinks to devices you want to pass-through
-    ```bash
-      cd /srv/
-      mkdir pass_drives
-      cd pass_drives
-      ln -s /dev/sdc
-    ```
+```bash
+cd /srv/
+mkdir pass_drives
+cd pass_drives
+ln -s /dev/sdc
+```
   - Run the following command from the command line interface:
-    ```bash
-      xe sr-create name-label=Pass_Drives type=udev content-type=disk device-config:location=/srv/pass_drives 
-    ```
+```bash
+xe sr-create name-label=Pass_Drives type=udev content-type=disk device-config:location=/srv/pass_drives 
+```
     - hostID: is shown by xe host-list
     - nameLabel: is the display name used in XCP-ng
     - devicePath:  shown in fdisk -l or lsblk - /dev/sdc
@@ -148,9 +145,9 @@ No packages marked for update
 ### Tutorials
 - [Tutorial - XCP-ng quick install - Lawrence System](https://www.youtube.com/watch?v=mp-pCgYszqU)
   - [XOA Appliance install](https://youtu.be/mp-pCgYszqU?t=305)
-  ```bash
-  bash -c "$(curl -s http://xoa.io/deploy)"
-  ```
+```bash
+bash -c "$(curl -s http://xoa.io/deploy)"
+```
   - [https://192.168.1.126/ Default user is admin@admin.net with admin as a password ](http://192.168.1.126/)
   - [Xen Orchestra Community build from source](https://xen-orchestra.com/docs/from_the_sources.html)
   - [Xen Orchestra Installer github](https://github.com/ronivay/XenOrchestraInstallerUpdater)
