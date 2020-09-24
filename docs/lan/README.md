@@ -12,6 +12,6 @@
 
 Current netstack proceedure is to use [https://domains.google/](https://domains.google/) and [github pages](https://github.com).
 
-- [Network IPAM and Subnets - pfsense](./lan/network/pfsense/)
-- [Storage Setup - freenas](./lan/storage/freenas/)
-- [Compute Setup - proxmox](./lan/compute/proxmox/)
+- [Network IPAM and Subnets - pfsense](./network/pfsense/)
+- [Storage Setup - freenas](./storage/freenas/)
+- [Compute Setup - proxmox](./compute/proxmox/)
