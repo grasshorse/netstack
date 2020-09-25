@@ -1,9 +1,9 @@
 # freeNAS configuration
 
 ## freeNAS install 
-1. Create freeNAS install USB thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
-2. Insert freeNAS install USB and a USB boot target
-3. Install...
+1. Create freeNAS install USB 3.0 Sandisk thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
+2. Insert freeNAS install USB and a USB 3.0 Sandisk boot target or use a small SSD
+3. Install... it will ask to set a root password
 4. Pull freeNAS install USB and reboot
 
 ## freeNAS Config
