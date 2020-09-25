@@ -6,7 +6,7 @@
 3. Install...
 4. Pull freeNAS install USB and reboot
 
-## freeNAS Storage Pool Config
+## freeNAS Config
 1. Login to FreeNAS (root - yoursecurepassword)
 2. View Dashboard check for any notifications
 3. From FreeNAS Dashboard -> Storage -> Pools -> Add -> Create new pool
@@ -14,10 +14,24 @@
   - Type: raidz2
   - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
 4. Confirm Create (will delete all data)
-5. Add S.M.A.R.T. Test schedule to drives
-  - monthly
-6. Add SCRUB schedule to drives
-  - monthly
+5. Clean up Network
+  - Hostname: sg
+  - Domain: ns.lan
+6. Add S.M.A.R.T. Test schedule to drives
+  - Tasks - S.M.A.R.T. Test
+  - Disks: (disk in each pool as a task) ada0, ada1, ada2
+  - Type: LONG
+  - Description: Monthly SMART test
+  - Schedule: Montly (0 0 - -) First day of month at 12AM
+7. Add SCRUB schedule to drives
+  - Tasks - Scrub Tasks
+  - Pool: nspool
+  - Threshold days: 14
+  - Description: Weekly Scrub
+8. Plugin Jail Pool: nspool
+9. Plugin gitlab
+  - Jail Name: gitlabjail
+  - DHCP (bind mac to DHCP server)
 
 ## freeNAS NFS Share Dataset Configuration
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.2.83/ui/storage/pools/status/1)
