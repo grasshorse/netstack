@@ -1,49 +1,172 @@
 # freeNAS configuration
 
+
 ## freeNAS install 
 1. Create freeNAS install USB 3.0 Sandisk thumbdrive [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
 2. Insert freeNAS install USB and a USB 3.0 Sandisk boot target or use a small SSD
 3. Install... it will ask to set a root password
 4. Pull freeNAS install USB and reboot
 
-## freeNAS Config
+
+## freeNAS first pool setup
+
+| Gateway purpose    | IP                                             | Local Domain Name                       |
+|--------------------|------------------------------------------------|-----------------------------------------|
+| Network Management | [https://192.168.128.1](https://192.168.128.1) | [https://ng.ns.lan](https://ng.ns.lan)  |
+| Storage Management | [https://192.168.128.4](https://192.168.128.4) | [https://sg.ns.lan](https://sg.ns.lan)  |
+
+----
 1. Login to FreeNAS (root - yoursecurepassword)
 2. View Dashboard check for any notifications
 3. From FreeNAS Dashboard -> Storage -> Pools -> Add -> Create new pool
-  - Name: nspool
-  - Type: raidz2
-  - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
+    - Name: nspool
+    - Type: raidz2
+    - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
 4. Confirm Create (will delete all data)
 5. Clean up Network
-  - Hostname: sg
-  - Domain: ns.lan
+    - Hostname: sg
+    - Domain: ns.lan
 6. Add S.M.A.R.T. Test schedule to drives
-  - Tasks - S.M.A.R.T. Test
-  - Disks: (disk in each pool as a task) ada0, ada1, ada2
-  - Type: LONG
-  - Description: Monthly SMART test
-  - Schedule: Montly (0 0 - -) First day of month at 12AM
+    - Tasks - S.M.A.R.T. Test
+    - Disks: (disk in each pool as a task) ada0, ada1, ada2
+    - Type: LONG
+    - Description: Monthly SMART test
+    - Schedule: Montly (0 0 - -) First day of month at 12AM
 7. Add SCRUB schedule to drives
-  - Tasks - Scrub Tasks
-  - Pool: nspool
-  - Threshold days: 14
-  - Description: Weekly Scrub
-8. Plugin Jail Pool: nspool
-9. Plugin gitlab
-  - Jail Name: gitlabjail
-  - DHCP (bind mac to DHCP server)
+    - Tasks - Scrub Tasks
+    - Pool: nspool
+    - Threshold days: 14
+    - Description: Weekly Scrub
 
+## freeNAS SMB Share Dataset Configuration
+
+Groups
+
+|   Group    | GID | Description |
+|------------|------|-------|
+| nsadmin    | 1009 | Netstack System Administration Group |
+| nsbackup   | 1008 | Netstack Backup Group |
+| nsprojects | 1001 | Netstack Projects Group  |
+| nspublic   | 1000 | Netstack Public Group |
+
+
+Users
+
+| user    | UID  | Description |
+|---------|------|------------------|
+| root    |  0   |  only use on head |
+| nsadmin |  1009   | only use in emergency |
+| buadmin |  1008   | backup user for scripts |
+| nsprouser | 1001 | basic project user template |
+| nspubuser | 1000 | public share only user template |
+
+
+1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.128.4/ui/storage/pools/status/1)
+2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
+  - Name: Projects
+  - Comments: netstack Projects
+  - Sync: Inherit (standard)
+  - Compression: Inherit (lz4) (default)
+  - Enable Atime: Inherit (on) (default)
+  - ZFS Dedulication: Inherit (off) (default)
+  - Case Sensitivity: Sensitive (default)
+  - Share Type: Generic
+  - SAVE
+3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
+  - Name: Public
+  - Comments: netstack Public share
+  - Sync: Inherit (standard)
+  - Compression: Inherit (lz4) (default)
+  - Enable Atime: Inherit (on) (default)
+  - ZFS Dedulication: Inherit (off) (default)
+  - Case Sensitivity: Sensitive (default)
+  - Share Type: Generic
+  - SAVE
+4. Create group nspublic [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
+  - GID: 1000
+  - Name: nspublic
+  - SAVE
+5. Create group nsprojects [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
+  - GID: 1001
+  - Name: nsprojects
+  - SAVE
+6. Create user nspubuser [Accounts - Users -> Add](http://192.168.128.4/ui/account/users/add)
+  - Full Name: Netstack Public User
+  - Username: nspubuser
+  - Email: nspubuser@netstack.org
+  - Password: somethingyouset
+  - User ID: 1000
+  - New Primary Group: unchecked - use nspublic as Primary Group
+  - Primary Group: nspublic
+  - Auxiliary Groups: none
+  - Home Directory: /mnt/nspool/Public
+  - Home Directory Permissions:
+  
+      |         | User | Group | Other |
+      |---------|------|-------|-------|
+      | Read    |   X  |   X   |   X   |
+      | Write   |   X  |       |       |
+      | Execute |   X  |   X   |   X   |
+  
+  - Authentication (leave default)
+  - SAVE
+  - Repeat for nsprouser but with nsprojects as primary group
+7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
+   - Path: /mnt/nspool/Public
+   - Name: Public
+   - Description: netstack Public SMB share
+   - Enabled: yes - checked
+   - Time Machine: no
+   - Allow Guest Access: no
+   - Enable Shadow Copies: yes - checked
+   - SAVE
+8. Edit ACL on Public Dataset [Storage - Pools - nspool - Public](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FPublic)
+  - Path: /mnt/nspool/Public
+  - User: root (default)
+  - Group: nspublic (select from pulldown)
+  - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
+  - Default ACL Options: OPEN
+  - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
+  - Save
+9. Add Projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
+   - Path: /mnt/nspool/Projects
+   - Name: Projects
+   - Description: netstack Projects
+   - Enabled: yes - checked
+   - Time Machine: no
+   - Allow Guest Access: no
+   - Enable Shadow Copies: yes - checked
+   - SAVE
+10. Edit ACL on Public Dataset [Storage - Pools - nspool - Projects](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FProjects)
+  - Path: /mnt/nspool/Projects
+  - User: root (default)
+  - Group: nsprojects (select from pulldown)
+  - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
+  - Default ACL Options: RESTRICTED
+  - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
+  - Save
+11. RESTART SMB Service 
+12. Test SMB connectivity on Windows
+  - Windows Machine
+  - File Browse to: \\192.168.128.4\ or sg.ns.lan
+  - Network credentials: nspubuser - passwordyouset
+  - Under Network > SG should see Projects and Public
+  - Click on Public
+  - Should be able to read and write files
+  - Click on Project
+  - Should NOT be able to access folder
+4. Enable SMB Service [Services - SMB - Edit](http://192.168.128.4/ui/services/smb)a
+  - Number of servers: 4 (each takes 1 core)
+  - Allow no-root mount: Checked
+  - Enable NFSv4: Checked
+  - Restart NFS Service
+
+ 
 ## freeNAS NFS Share Dataset Configuration
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.2.83/ui/storage/pools/status/1)
 2. Add NFS_ISO_Share [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
   - Name: NFS_ISO_Share
   - Comments: NFS ISO files for LAN Share
-  - Sync: Inherit (standard)
-  - Leave rest default
-  - SAVE
-2. Add Projects [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
-  - Name: Projects
-  - Comments: Projects share directory
   - Sync: Inherit (standard)
   - Leave rest default
   - SAVE
@@ -77,8 +200,11 @@ root@freenas[/mnt/nspool]#
   - Advanced: Security: sys
   - Save
 8. Add the NFS share to your [xcp-ng server](../../compute/xcp-ng/)
-  
-## Reference
+
+## Reference Links
+[Etcher - download]:(https://www.balena.io/etcher/k)
+
+## Reference Videos
 - [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) 
 - [TrueNAS core 12.0 Video](https://www.youtube.com/watch?v=KS6gVJnmy2U)
 - [FreeNAS 11.3 download](https://www.freenas.org/download-freenas-release/) 
@@ -88,8 +214,9 @@ root@freenas[/mnt/nspool]#
 - [youtube - Lawrence Systems - Open Source File Sync: Getting Started Tutorial With Syncthing on Windows & Linux](https://www.youtube.com/watch?v=O5O4ajGWZz8)
 - [youtube - Lawrence Systems - Why We Use Syncthing, The Open Source Private File Syncing Tool instead of NextCloud](https://www.youtube.com/watch?v=bNiiJe8NpEw)
 - [youtube - Lawrence Systems - FreeNAS 11 Rsync Server Setup](https://www.youtube.com/watch?v=Qhlp18QTUTo&t=359s)
-- [youtube - tbd]()
-- [youtube - tbd]()
+- [youtube - Lawrence Systems - How To Setup NFS With FreeNAS and XenServer](https://youtu.be/k_gvwU15EyE)
+- [youtube - Setting up FreeNAS 11 3 & SMB Basics](https://www.youtube.com/watch?v=__48uQ1ac6I)
+- [youtube - - Lawrence Systems - FreeNAS 11.3 Windows Shares / File Sharing Permissions & ACL Configurations.](https://www.youtube.com/watch?v=dDs0DLj7J9w)
 
 ## Hindsight Jail
 1. From FreeNAS Dashboard -> Jails -> ADD
