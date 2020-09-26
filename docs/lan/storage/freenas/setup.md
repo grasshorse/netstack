@@ -63,44 +63,44 @@ Users
 
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.128.4/ui/storage/pools/status/1)
 2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
-  - Name: Projects
-  - Comments: netstack Projects
-  - Sync: Inherit (standard)
-  - Compression: Inherit (lz4) (default)
-  - Enable Atime: Inherit (on) (default)
-  - ZFS Dedulication: Inherit (off) (default)
-  - Case Sensitivity: Sensitive (default)
-  - Share Type: Generic
-  - SAVE
+      - Name: Projects
+      - Comments: netstack Projects
+      - Sync: Inherit (standard)
+      - Compression: Inherit (lz4) (default)
+      - Enable Atime: Inherit (on) (default)
+      - ZFS Dedulication: Inherit (off) (default)
+      - Case Sensitivity: Sensitive (default)
+      - Share Type: Generic
+      - SAVE
 3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
-  - Name: Public
-  - Comments: netstack Public share
-  - Sync: Inherit (standard)
-  - Compression: Inherit (lz4) (default)
-  - Enable Atime: Inherit (on) (default)
-  - ZFS Dedulication: Inherit (off) (default)
-  - Case Sensitivity: Sensitive (default)
-  - Share Type: Generic
-  - SAVE
+      - Name: Public
+      - Comments: netstack Public share
+      - Sync: Inherit (standard)
+      - Compression: Inherit (lz4) (default)
+      - Enable Atime: Inherit (on) (default)
+      - ZFS Dedulication: Inherit (off) (default)
+      - Case Sensitivity: Sensitive (default)
+      - Share Type: Generic
+      - SAVE
 4. Create group nspublic [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
-  - GID: 1000
-  - Name: nspublic
-  - SAVE
+      - GID: 1000
+      - Name: nspublic
+      - SAVE
 5. Create group nsprojects [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
-  - GID: 1001
-  - Name: nsprojects
-  - SAVE
+      - GID: 1001
+      - Name: nsprojects
+      - SAVE
 6. Create user nspubuser [Accounts - Users -> Add](http://192.168.128.4/ui/account/users/add)
-  - Full Name: Netstack Public User
-  - Username: nspubuser
-  - Email: nspubuser@netstack.org
-  - Password: somethingyouset
-  - User ID: 1000
-  - New Primary Group: unchecked - use nspublic as Primary Group
-  - Primary Group: nspublic
-  - Auxiliary Groups: none
-  - Home Directory: /mnt/nspool/Public
-  - Home Directory Permissions:
+      - Full Name: Netstack Public User
+      - Username: nspubuser
+      - Email: nspubuser@netstack.org
+      - Password: somethingyouset
+      - User ID: 1000
+      - New Primary Group: unchecked - use nspublic as Primary Group
+      - Primary Group: nspublic
+      - Auxiliary Groups: none
+      - Home Directory: /mnt/nspool/Public
+      - Home Directory Permissions:
   
       |         | User | Group | Other |
       |---------|------|-------|-------|
@@ -108,35 +108,35 @@ Users
       | Write   |   X  |       |       |
       | Execute |   X  |   X   |   X   |
   
-  - Authentication (leave default)
-  - SAVE
-  - Repeat for nsprouser but with nsprojects as primary group
+      - Authentication (leave default)
+      - SAVE
+      - Repeat for nsprouser but with nsprojects as primary group
 7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
-   - Path: /mnt/nspool/Public
-   - Name: Public
-   - Description: netstack Public SMB share
-   - Enabled: yes - checked
-   - Time Machine: no
-   - Allow Guest Access: no
-   - Enable Shadow Copies: yes - checked
-   - SAVE
+       - Path: /mnt/nspool/Public
+       - Name: Public
+       - Description: netstack Public SMB share
+       - Enabled: yes - checked
+       - Time Machine: no
+       - Allow Guest Access: no
+       - Enable Shadow Copies: yes - checked
+       - SAVE
 8. Edit ACL on Public Dataset [Storage - Pools - nspool - Public](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FPublic)
-  - Path: /mnt/nspool/Public
-  - User: root (default)
-  - Group: nspublic (select from pulldown)
-  - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
-  - Default ACL Options: OPEN
-  - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
-  - Save
+      - Path: /mnt/nspool/Public
+      - User: root (default)
+      - Group: nspublic (select from pulldown)
+      - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
+      - Default ACL Options: OPEN
+      - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
+      - Save
 9. Add Projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
-   - Path: /mnt/nspool/Projects
-   - Name: Projects
-   - Description: netstack Projects
-   - Enabled: yes - checked
-   - Time Machine: no
-   - Allow Guest Access: no
-   - Enable Shadow Copies: yes - checked
-   - SAVE
+       - Path: /mnt/nspool/Projects
+       - Name: Projects
+       - Description: netstack Projects
+       - Enabled: yes - checked
+       - Time Machine: no
+       - Allow Guest Access: no
+       - Enable Shadow Copies: yes - checked
+       - SAVE
 10. Edit ACL on Public Dataset [Storage - Pools - nspool - Projects](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FProjects)
   - Path: /mnt/nspool/Projects
   - User: root (default)
@@ -147,21 +147,50 @@ Users
   - Save
 11. RESTART SMB Service 
 12. Test SMB connectivity on Windows
-  - Windows Machine
-  - File Browse to: \\192.168.128.4\ or sg.ns.lan
-  - Network credentials: nspubuser - passwordyouset
-  - Under Network > SG should see Projects and Public
-  - Click on Public
-  - Should be able to read and write files
-  - Click on Project
-  - Should NOT be able to access folder
-4. Enable SMB Service [Services - SMB - Edit](http://192.168.128.4/ui/services/smb)a
-  - Number of servers: 4 (each takes 1 core)
-  - Allow no-root mount: Checked
-  - Enable NFSv4: Checked
-  - Restart NFS Service
+      - Windows Machine
+      - File Browse to: \\192.168.128.4\ or sg.ns.lan
+      - Network credentials: nspubuser - passwordyouset
+      - Under Network > SG should see Projects and Public
+      - Click on Public
+      - Should be able to read and write files
+      - Click on Project
+      - Should NOT be able to access folder
+13. Enable SMB Service [Services - SMB - Edit](http://192.168.128.4/ui/services/smb)a
+      - Number of servers: 4 (each takes 1 core)
+      - Allow no-root mount: Checked
+      - Enable NFSv4: Checked
+      - Restart NFS Service
 
- 
+## Windows 10 SMB Share browse
+1. Open File Explorer
+2. Type "\\sg.ns.lan" (or \\192.168.128.4) into path bar
+3. Windows should request credentials
+4. With correct credentials, File Explorer will display all datasets associated with server
+
+## Windows 10 Map Network Drive
+1. Right click on "This PC"
+2. Select "Map network drive..."
+    - Select Drive to map: "Z:"
+    - Folder: "\\sg.ns.lan" (or \\192.168.128.4)
+    - Reconnect at sign-in: checked (yes)
+    - Connect using different credentials: checked (yes)
+    - Enter credentials: nsprouser - thepasswordyouset
+    - Finish
+3. You should have access, you can edit or insert credentials directly see "Windows 10 credentials debug" below
+
+## Windows 10 credentials debug
+1. Search for "credentials" Select "Manage Windows Credentials Control panel" Application
+    - Click Windows Credentials
+    - Add, Edit or Remove the associated Windows Credentials
+2. Clear Windows 10 local credentials
+    - Press the Windows key + R together to open the Run box. Type the following command and hit Enter.
+        ```
+        rundll32.exe keymgr.dll, KRShowKeyMgr
+        ```
+    - Select and delete the credential
+
+## Apple Mac Map Network Drive
+1. 
 ## freeNAS NFS Share Dataset Configuration
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.2.83/ui/storage/pools/status/1)
 2. Add NFS_ISO_Share [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
@@ -202,7 +231,11 @@ root@freenas[/mnt/nspool]#
 8. Add the NFS share to your [xcp-ng server](../../compute/xcp-ng/)
 
 ## Reference Links
-[Etcher - download]:(https://www.balena.io/etcher/k)
+- [Etcher - download]:(https://www.balena.io/etcher/k)
+- [Uncle Fester's Basic FreeNAS 9.10 Configuration Guide](https://www.familybrown.org/dokuwiki/doku.php?id=fester:intro)
+- [FreeNAS Windows Shares](https://thesolving.com/storage/how-to-create-a-windows-share-with-freenas/)
+- [FreeNAS Guides](https://thesolving.com/tag/freenas/)
+- [How to clear Windows network credentials](https://www.top-password.com/blog/clear-saved-credentials-for-network-share-or-remote-desktop/#:~:text=Click%20the%20%E2%80%9CManage%20your%20credentials,Remove%20option%20to%20clear%20it.)
 
 ## Reference Videos
 - [TrueNAS 12.0 download](https://download.freenas.org/12.0/MASTER/latest/x64/) 
