@@ -189,8 +189,37 @@ Users
         ```
     - Select and delete the credential
 
+## Windows 10 bash mount Mounting DrvFs
+In order to mount a Windows drive using DrvFs, you can use the regular Linux mount command. For example, to mount a removable drive D: as /mnt/d directory, run the following commands:
+```
+$ sudo mkdir /mnt/d
+$ sudo mount -t drvfs D: /mnt/d
+```
+Now, you will be able to access the files of your D: drive under /mnt/d. When you wish to unmount the drive, for example so you can safely remove it, run the following command:
+```
+$ sudo umount /mnt/d
+```
+Mounting network locations
+When you wish to mount a network location, you can of course create a mapped network drive in Windows and mount that as indicated above. However, it's also possible to mount them directly using a UNC path:
+```
+$ sudo mkdir /mnt/share
+$ sudo mount -t drvfs '\\server\share' /mnt/share
+```
+Note the single quotes around the UNC path; these are necessary to prevent the need to escape the backslashes. If you don't surround the UNC path with single quotes, you need to escape the backslashes by doubling them (e.g. \\\\server\\share).
+
+WSL does not have any way to specify which credentials to use to connect to a network share. If you need to use different credentials to connect to the server, specify them in Windows by navigating to the share in File Explorer, using the Windows Credential Manager, or the net use command. The net use command can be invoked from inside WSL (using net.exe use) via interop. Type net.exe help use for more information on how to use this command.
+
 ## Apple Mac Map Network Drive
-1. 
+Via Network Browse
+1. Click Finder -> Network -> sg 
+2. Click "Connect As" and enter credentials
+3. Finder should show all resources on that server
+
+Via GO
+1. Click Finder GO -> "Connect to Server"
+2. smb://sg.ns.lan (or smb://192.168.128.4)
+3. Select the dataset you want to mount
+
 ## freeNAS NFS Share Dataset Configuration
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.2.83/ui/storage/pools/status/1)
 2. Add NFS_ISO_Share [Storage - Pools -> nspool -> Add Dataset](http://192.168.2.83/ui/storage/pools/id/nspool/dataset/add/nspool) [LT-video](https://youtu.be/k_gvwU15EyE?t=95)
