@@ -16,18 +16,17 @@ ssh root@192.168.128.5
 Create the jail as follows:
 
 ```
-iocage create -n reverse-proxy -r 11.2-RELEASE ip4_addr="vnet0|192.168.0.9/24" defaultrouter="192.168.0.1" vnet="on" allow_raw_sockets="1" boot="on"
+iocage create -n nsrevproxy -r 11.2-RELEASE ip4_addr="vnet0|192.168.128.9/24" defaultrouter="192.168.128.1" vnet="on" allow_raw_sockets="1" boot="on"
 ```
 
 Command explained:
-
 | param | detail |
 |-------|--------|
 | iocage create | calls on the iocage command to create a new iocage jail |
 | -n reverse-proxy | gives the jail the name ‘reverse-proxy’ |
 | -r 11.2-RELEASE | specifies the release of FreeBSD to be installed in the jail |
-| ip4_addr="vnet0-192.168.0.9/24" | the "-" should be a pipe: IP/mask for the jail, and the interface to use, vnet0 |
-| defaultrouter="192.168.0.1" | specifies the router for your network |
+| ip4_addr="vnet0-192.168.128.9/24" | the "-" should be a pipe: IP/mask for the jail, and the interface to use, vnet0 |
+| defaultrouter="192.168.128.1" | specifies the router for your network |
 | vnet="on" | enables the vnet interface |
 | allow_raw_sockets="1" | enables raw sockets, which enables the use of traceroute and ping within the jail, as well as interactions with various network subsystems |
 | boot="on" | enables the jail to be auto-started at boot time |
