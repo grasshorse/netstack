@@ -1,7 +1,7 @@
 [documents index](../)
 
-- [Netstack - freenas](./storage/freenas/)
-- [Netstack - freenas - setup](./storage/freenas/setup/)
+- [Netstack - freenas](./storage/freenas)
+- [Netstack - freenas - setup](./storage/freenas/setup)
 - [Netstack - NFS - Windows Client](./storage/windows)
 - [Netstack - SMB - Windows Client](./storage/windows)
 
