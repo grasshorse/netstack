@@ -5,10 +5,10 @@
 1. Create [freeNAS install](https://web.freenas.org/download-freenas-release-112-113/) USB 3.0 Sandisk bootable thumbdrive using [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
     ![netstackFreeNASInstallUSB-Rufus](./netstackFreeNASInstallUSB-Rufus.png)
 2. Insert freeNAS install USB and a USB 3.0 Sandisk boot target or use a small SSD
-    ![netstackFreeNASInstall)(./netstackFreeNASInstallUSB.png)
-    ![netstackFreeNASInstall)(./netstackFreeNASInstallUSB2.png)
+    ![netstackFreeNASInstall](./netstackFreeNASInstallUSB.png)
+    ![netstackFreeNASInstall](./netstackFreeNASInstallUSB2.png)
 3. Install... it will ask to set a root password
-    ![netstackFreeNASInstall)(./netstackFreeNASInstall.png)
+    ![netstackFreeNASInstall](./netstackFreeNASInstall.png)
 4. Pull freeNAS install USB and reboot
 
 
