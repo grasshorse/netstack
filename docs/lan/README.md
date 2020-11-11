@@ -1,4 +1,10 @@
 [documents index](../)
+
+- [Netstack - freenas](../freenas/)
+- [Netstack - freenas - setup](../freenas/setup/)
+- [Netstack - NFS - Windows Client]()
+- [Netstack - SMB - Windows Client]()
+
 # LAN Overview
 
 ![netstackEdgeNode](./netstackEdgeNode.svg)
