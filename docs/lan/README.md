@@ -18,10 +18,10 @@
 Current netstack proceedure is to use [https://domains.google/](https://domains.google/) and [github pages](https://github.com) for community documents.  [Netstack https://netstack.org/docs](https://netstack.org/docs/)
 
 ## Netstack basics
-Netstacks three technology pilars
+Netstacks focuses on the three technology pilars.  The above network IP is an opinionated map for the primary gateways, secondaries, backups and documents.
 
-- [Network - pfsense](./network/pfsense/)
-- [Storage - freenas](./storage/freenas/)
-- [Compute - proxmox](./compute/proxmox/)
+- Pilar 1 - [Network - pfsense](./network/pfsense/) [pfsense.org](https://www.pfsense.org/)
+- Pilar 2 - [Storage - freenas](./storage/freenas/) [freenas.org](https://www.freenas.org/)
+- Pilar 3 - [Compute - xcp-ng](./compute/xcp-ng/) [xcp-ng.org](https://xcp-ng.org/)
 
 ## Netstack service
