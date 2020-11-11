@@ -10,10 +10,11 @@
 
 ## freeNAS first pool setup
 
-| Gateway purpose    | IP                                             | Local Domain Name                       |
-|--------------------|------------------------------------------------|-----------------------------------------|
-| Network Management | [https://192.168.128.1](https://192.168.128.1) | [https://ng.ns.lan](https://ng.ns.lan)  |
-| Storage Management | [https://192.168.128.4](https://192.168.128.4) | [https://sg.ns.lan](https://sg.ns.lan)  |
+| Gateway purpose            | IP                                             | Local Domain Name                       |
+|----------------------------|------------------------------------------------|-----------------------------------------|
+| Network Management Gateway | [https://192.168.128.1](https://192.168.128.1) | [https://ng.ns.lan](https://ng.ns.lan)  |
+| Storage Management Gateway | [https://192.168.128.2](https://192.168.128.2) | [https://sg.ns.lan](https://sg.ns.lan)  |
+| Compute Management Gateway | [https://192.168.128.3](https://192.168.128.3) | [https://cg.ns.lan](https://cg.ns.lan)  |
 
 ----
 1. Login to FreeNAS (root - yoursecurepassword)
@@ -61,8 +62,8 @@ Users
 | nspubuser | 1000 | public share only user template |
 
 
-1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.128.4/ui/storage/pools/status/1)
-2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
+1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.128.2/ui/storage/pools/status/1)
+2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.2/ui/storage/pools/id/nspool/dataset/add/nspool)
       - Name: Projects
       - Comments: netstack Projects
       - Sync: Inherit (standard)
@@ -72,7 +73,7 @@ Users
       - Case Sensitivity: Sensitive (default)
       - Share Type: Generic
       - SAVE
-3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.4/ui/storage/pools/id/nspool/dataset/add/nspool)
+3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.2/ui/storage/pools/id/nspool/dataset/add/nspool)
       - Name: Public
       - Comments: netstack Public share
       - Sync: Inherit (standard)
@@ -82,15 +83,15 @@ Users
       - Case Sensitivity: Sensitive (default)
       - Share Type: Generic
       - SAVE
-4. Create group nspublic [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
+4. Create group nspublic [Accounts - Groups -> Add](http://192.168.128.2/ui/account/groups/add)
       - GID: 1000
       - Name: nspublic
       - SAVE
-5. Create group nsprojects [Accounts - Groups -> Add](http://192.168.128.4/ui/account/groups/add)
+5. Create group nsprojects [Accounts - Groups -> Add](http://192.168.128.2/ui/account/groups/add)
       - GID: 1001
       - Name: nsprojects
       - SAVE
-6. Create user nspubuser [Accounts - Users -> Add](http://192.168.128.4/ui/account/users/add)
+6. Create user nspubuser [Accounts - Users -> Add](http://192.168.128.2/ui/account/users/add)
       - Full Name: Netstack Public User
       - Username: nspubuser
       - Email: nspubuser@netstack.org
@@ -111,7 +112,7 @@ Users
       - Authentication (leave default)
       - SAVE
       - Repeat for nsprouser but with nsprojects as primary group
-7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
+7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.2/ui/sharing/smb/add)
        - Path: /mnt/nspool/Public
        - Name: Public
        - Description: netstack Public SMB share
@@ -120,7 +121,7 @@ Users
        - Allow Guest Access: no
        - Enable Shadow Copies: yes - checked
        - SAVE
-8. Edit ACL on Public Dataset [Storage - Pools - nspool - Public](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FPublic)
+8. Edit ACL on Public Dataset [Storage - Pools - nspool - Public](http://192.168.128.2/ui/storage/pools/id/nspool/dataset/acl/nspool%2FPublic)
       - Path: /mnt/nspool/Public
       - User: root (default)
       - Group: nspublic (select from pulldown)
@@ -128,7 +129,7 @@ Users
       - Default ACL Options: OPEN
       - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
       - Save
-9. Add Projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.4/ui/sharing/smb/add)
+9. Add Projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.2/ui/sharing/smb/add)
        - Path: /mnt/nspool/Projects
        - Name: Projects
        - Description: netstack Projects
@@ -137,7 +138,7 @@ Users
        - Allow Guest Access: no
        - Enable Shadow Copies: yes - checked
        - SAVE
-10. Edit ACL on Public Dataset [Storage - Pools - nspool - Projects](http://192.168.128.4/ui/storage/pools/id/nspool/dataset/acl/nspool%2FProjects)
+10. Edit ACL on Public Dataset [Storage - Pools - nspool - Projects](http://192.168.128.2/ui/storage/pools/id/nspool/dataset/acl/nspool%2FProjects)
   - Path: /mnt/nspool/Projects
   - User: root (default)
   - Group: nsprojects (select from pulldown)
@@ -148,14 +149,14 @@ Users
 11. RESTART SMB Service 
 12. Test SMB connectivity on Windows
       - Windows Machine
-      - File Browse to: \\192.168.128.4\ or sg.ns.lan
+      - File Browse to: \\192.168.128.2\ or sg.ns.lan
       - Network credentials: nspubuser - passwordyouset
       - Under Network > SG should see Projects and Public
       - Click on Public
       - Should be able to read and write files
       - Click on Project
       - Should NOT be able to access folder
-13. Enable SMB Service [Services - SMB - Edit](http://192.168.128.4/ui/services/smb)a
+13. Enable SMB Service [Services - SMB - Edit](http://192.168.128.2/ui/services/smb)a
       - Number of servers: 4 (each takes 1 core)
       - Allow no-root mount: Checked
       - Enable NFSv4: Checked
@@ -163,7 +164,7 @@ Users
 
 ## Windows 10 SMB Share browse
 1. Open File Explorer
-2. Type "\\sg.ns.lan" (or \\192.168.128.4) into path bar
+2. Type "\\sg.ns.lan" (or \\192.168.128.2) into path bar
 3. Windows should request credentials
 4. With correct credentials, File Explorer will display all datasets associated with server
 
@@ -171,7 +172,7 @@ Users
 1. Right click on "This PC"
 2. Select "Map network drive..."
     - Select Drive to map: "Z:"
-    - Folder: "\\sg.ns.lan" (or \\192.168.128.4)
+    - Folder: "\\sg.ns.lan" (or \\192.168.128.2)
     - Reconnect at sign-in: checked (yes)
     - Connect using different credentials: checked (yes)
     - Enter credentials: nsprouser - thepasswordyouset
