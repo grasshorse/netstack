@@ -1,5 +1,6 @@
-# freeNAS configuration
+[documents](../../../) [lan](../../) [storage](../)
 
+# freeNAS configuration
 
 ## freeNAS install 
 1. Create [freeNAS install](https://web.freenas.org/download-freenas-release-112-113/) USB 3.0 Sandisk bootable thumbdrive using [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
