@@ -9,13 +9,13 @@
   - Note interface assignments and lable ports and cables
   - Walk through wizard
     - Turn off Block RFC1918 Private Addresses and bogon networks (so we can use LAN address ranges)
-    - Decide what the LAN subnet should be (default is 192.168.1.1/24) 191.168.252.0/23
+    - Decide what the LAN subnet should be (default is 192.168.1.1/24) 191.168.128.0/24
     - Set admin password
   - Should have 2 interfaces WAN and LAN
   - Add Traffic Graphs to Dashboard 
 2. DHCP Setup -> Services DHCP Server / LAN
   - Enbable DHCP Server
-  - Range: 192.168.253.101 - 199 (Move new servers to MAC assignment)
+  - Range: 192.168.128.101 - 199 (Move new servers to MAC assignment)
   - View DHCP Static Mappings (at bottom)
   - Status -> DCHP Leaases View leases and move 101-199 to a static according to IP mappings
 3. Add VLAN's (skip this for now... will have to deal with router)
@@ -29,14 +29,14 @@
     - Check Enable Interface
     - Add Description: ADM
     - IPv4 Config Type: Static IPv4
-    - Go down to Static IPv4 Config and the IP (192.168.9.1/24)
+    - Go down to Static IPv4 Config and the IP (192.168.128.1/24)
     - Uncheck reserve net blocking
     - Click SAVE
     - Click APPLY CHANGES
   - Services -> DHCP Server
     - Select ADM network
     - Enable DHCP Server
-    - Range: 192.168.9.200-250
+    - Range: 192.168.128.200-250
     - Save
 4. Add Firewall Rules
   - Firewall -> Rules -> ADM
