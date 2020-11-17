@@ -1,9 +1,8 @@
 # Netstack Windows 10 pro workstation on 1U-Dell
 
 
-## Build hswin10pro
-1. nswin10 
-  - BIOS Config
+## Build nswin10
+- BIOS Config
     1. Name: hswin10pro VMID: 303 Server: pm01
     2. Windows 10/2016
     3. CD/DVD: Storage: hsfreenas ISO: Win10_1909_English_x64.iso
@@ -11,7 +10,7 @@
     5. 6 cores, 8192 (8GB), Enable Numa
     6. Network: Bridge: vmbro Model: VirtIO Firewall: UNCHECKED <disable>
     7. Add second CD/DVD: Storage: hsfreenas ISO: virt-win-0.1.171.iso
-  - Boot Win10 Install USB
+- Boot Win10 Install USB
     1. Proceed with windows installation as normal. Custom: Install Windows only (advanced)
     2. Where to Install setup will not find any drives.
         - Select "Load driver"
@@ -19,21 +18,21 @@
         - Click OK should load the Red Hat VirtIO SCSI controller
         - Click NEXT to partion and continue the installation
     3. Finish Windows Install remove Install USB and Reboot
-  - Start nswin10
+- Start nswin10
     1. Login on Console with User
     2. Enable "Microsoft Remote Connection"
     3. Turn off Windows Firewall
-  - Reboot
-  - Setup Resources
+- Reboot
+- Setup Resources
     1. [Windows 10 iso - Download link](https://www.microsoft.com/en-us/software-download/windows10ISO)
     2. [tbd]()
-2. Run Windows Updates
-  - Keep updating and rebooting until is stops complaining
-3. Basic Installs
-  - Download and install Chrome Downloads/ChromeSetup
-  - Download and install FireFox Downloads/Firefox Installer
-  - Download and install Edge Downloads/MicrosoftEdgeSetup
-4. Connect [NFS Storage](https://graspingtech.com/mount-nfs-share-windows-10/)
+- Run Windows Updates Keep updating and rebooting until is stops complaining
+- Basic Installs
+    - Download and install Chrome Downloads/ChromeSetup
+    - Download and install FireFox Downloads/Firefox Installer
+    - Download and install Edge Downloads/MicrosoftEdgeSetup
+
+## Connect [NFS Storage](https://graspingtech.com/mount-nfs-share-windows-10/)
   - CD/DVD: Storage: nsfreenas ISO: Win10_1909_English_x64.iso
   - Install NFS Client
     1. Open "Control Panel"
@@ -67,7 +66,8 @@
 
     C:\Users\nsadmin>
     ```
-5. Install Ubuntu 20.04 LTS app via Play store
+
+## Install Ubuntu 20.04 LTS app via Play store
   - Start session with hsadmin - normalpw
   - Where is [file system root in windows](https://askubuntu.com/questions/759880/where-is-the-ubuntu-file-system-root-directory-in-windows-subsystem-for-linux-an)
   - Did not get working but... [nfs mount from windows subsystem](https://superuser.com/questions/1128634/how-to-access-mounted-network-drive-on-windows-linux-subsystem/1261563)
@@ -79,10 +79,13 @@
     3. Verify: df -h
     4. sudo touch /mnt/hspool/thistest.txt
     5. ls -l /mnt/hspool/thistest.txt
-6. Install [Visual Studio Code](https://code.visualstudio.com/)
-7. Shutdown backup: tbd (backup before Key Activation)
-8. Activate Windows Pro Key
-9. Shutdown backup: tbd (backup after Key Activation)
+
+## Install [Visual Studio Code](https://code.visualstudio.com/)
+
+## Cleanup - Backup
+1. Shutdown backup: tbd (backup before Key Activation)
+2. Activate Windows Pro Key
+3. Shutdown backup: tbd (backup after Key Activation)
   
 ## Notes
 1. [Windows Sandbox](https://www.theverge.com/2018/12/19/18147991/microsoft-windows-sandbox-security-safety-isolation-standalone-apps)
