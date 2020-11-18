@@ -3,7 +3,7 @@
 
 ## Build nswin10
 - BIOS Config
-    1. Name: hswin10pro VMID: 303 Server: pm01
+    1. Name: nswin10 VMID: 303 Server: pm01
     2. Windows 10/2016
     3. CD/DVD: Storage: hsfreenas ISO: Win10_1909_English_x64.iso
     4. Hard Disk: Bus: VirtIO 0 Storage: local-lvm Disk size: 32GB Cache: Write back
