@@ -32,6 +32,15 @@
     - Download and install FireFox Downloads/Firefox Installer
     - Download and install Edge Downloads/MicrosoftEdgeSetup
 
+## Windows Subsystem for Linux Ubuntu Install
+1. Search for "Control Panel" -> "Programs" -> "Turn Windows features on or off"
+2. Turn on "Windows Subsystem for Linux"
+3. Go to Microsoft Store and get [Ubuntu App](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6)
+4. Run the Ubuntu app and it will install.
+5. Enter your new UNIX username and password
+6. Files are hidden but at C:\Users\<username>\AppData\Local\Packages\CononicalGroupLimited.UbuntuonWindows_xxxxxxx\LocalState\rootfs
+7. The windows drives in Linux are /mnt/c/
+
 ## Connect [NFS Storage](https://graspingtech.com/mount-nfs-share-windows-10/)
   - CD/DVD: Storage: nsfreenas ISO: Win10_1909_English_x64.iso
   - Install NFS Client
