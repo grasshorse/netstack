@@ -27,22 +27,22 @@
 1. Login to freenas (root - yoursecurepassword)
 2. View Dashboard check for any notifications
 3. From FreeNAS Dashboard -> Storage -> Pools -> Add -> Create new pool
-    - Name: nspool
+    - Name: ghpool
     - Type: raidz2
     - Add Drives (the 4 disks) -> Set to raidz2 (default is raidz2)
 4. Confirm Create (will delete all data)
 5. Clean up Network
     - Hostname: sg
-    - Domain: ns.lan
-6. Add S.M.A.R.T. Test schedule to drives
+    - Domain: gh.lan
+6. From Tasks -> S.M.A.R.T. Test Add schedule to drives
     - Tasks - S.M.A.R.T. Test
-    - Disks: (disk in each pool as a task) ada0, ada1, ada2
+    - Disks: (disk in each pool as a task) da0, da1, da2, da3
     - Type: LONG
     - Description: Monthly SMART test
     - Schedule: Montly (0 0 - -) First day of month at 12AM
 7. Add SCRUB schedule to drives
     - Tasks - Scrub Tasks
-    - Pool: nspool
+    - Pool: ghpool
     - Threshold days: 14
     - Description: Weekly Scrub
 
@@ -52,10 +52,10 @@ Groups
 
 |   Group    | GID | Description |
 |------------|------|-------|
-| nsadmin    | 1009 | Netstack System Administration Group |
-| nsbackup   | 1008 | Netstack Backup Group |
-| nsprojects | 1001 | Netstack Projects Group  |
-| nspublic   | 1000 | Netstack Public Group |
+| ghadmin    | 1009 | Grasshorse System Administration Group |
+| ghbackup   | 1008 | Grasshorse Backup Group |
+| ghprojects | 1001 | Grasshorse Projects Group  |
+| ghpublic   | 1000 | Grasshorse Public Group |
 
 
 Users
@@ -63,16 +63,16 @@ Users
 | user    | UID  | Description |
 |---------|------|------------------|
 | root    |  0   |  only use on head |
-| nsadmin |  1009   | only use in emergency |
+| ghadmin |  1009   | only use in emergency |
 | buadmin |  1008   | backup user for scripts |
-| nsprouser | 1001 | basic project user template |
-| nspubuser | 1000 | public share only user template |
+| ghprouser | 1001 | basic project user template |
+| ghpubuser | 1000 | public share only user template |
 
 
-1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.128.2/ui/storage/pools/status/1)
+1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.252.2/ui/storage/pools/status/1)
 2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.2/ui/storage/pools/id/nspool/dataset/add/nspool)
-      - Name: Projects
-      - Comments: netstack Projects
+      - Name: projects
+      - Comments: Grasshorse projects shared files
       - Sync: Inherit (standard)
       - Compression: Inherit (lz4) (default)
       - Enable Atime: Inherit (on) (default)
@@ -80,9 +80,9 @@ Users
       - Case Sensitivity: Sensitive (default)
       - Share Type: Generic
       - SAVE
-3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.2/ui/storage/pools/id/nspool/dataset/add/nspool)
-      - Name: Public
-      - Comments: netstack Public share
+3. Add Public dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.252.2/ui/storage/pools/id/nspool/dataset/add/ghpool)
+      - Name: public
+      - Comments: Grasshorse public share
       - Sync: Inherit (standard)
       - Compression: Inherit (lz4) (default)
       - Enable Atime: Inherit (on) (default)
@@ -90,24 +90,24 @@ Users
       - Case Sensitivity: Sensitive (default)
       - Share Type: Generic
       - SAVE
-4. Create group nspublic [Accounts - Groups -> Add](http://192.168.128.2/ui/account/groups/add)
+4. Create group ghpublic [Accounts - Groups -> Add](http://192.168.252.2/ui/account/groups/add)
       - GID: 1000
-      - Name: nspublic
+      - Name: ghpublic
       - SAVE
-5. Create group nsprojects [Accounts - Groups -> Add](http://192.168.128.2/ui/account/groups/add)
+5. Create group ghprojects [Accounts - Groups -> Add](http://192.168.252.2/ui/account/groups/add)
       - GID: 1001
-      - Name: nsprojects
+      - Name: ghprojects
       - SAVE
-6. Create user nspubuser [Accounts - Users -> Add](http://192.168.128.2/ui/account/users/add)
-      - Full Name: Netstack Public User
-      - Username: nspubuser
-      - Email: nspubuser@netstack.org
+6. Create user ghpubuser [Accounts - Users -> Add](http://192.168.252.2/ui/account/users/add)
+      - Full Name: Grasshorse Public User
+      - Username: ghpubuser
+      - Email: 
       - Password: somethingyouset
       - User ID: 1000
       - New Primary Group: unchecked - use nspublic as Primary Group
-      - Primary Group: nspublic
+      - Primary Group: ghpublic
       - Auxiliary Groups: none
-      - Home Directory: /mnt/nspool/Public
+      - Home Directory: /mnt/nspool/public
       - Home Directory Permissions:
   
       |         | User | Group | Other |
