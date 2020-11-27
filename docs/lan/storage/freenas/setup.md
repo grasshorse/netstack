@@ -1,6 +1,14 @@
 [documents](../../../) [lan](../../) [storage](../)
 
-# freeNAS configuration
+| Gateway purpose            | IP                                             | Local Domain Name                       |
+|----------------------------|------------------------------------------------|-----------------------------------------|
+| Network Management Gateway | [https://192.168.252.1](https://192.168.252.1) | [https://ng.gh.lan](https://ng.gh.lan)  |
+| Storage Management Gateway | [https://192.168.252.2](https://192.168.252.2) | [https://sg.gh.lan](https://sg.gh.lan)  |
+| Compute Management Gateway | [https://192.168.252.3](https://192.168.252.3) | [https://cg.gh.lan](https://cg.gh.lan)  |
+
+----
+
+# Storage Management Gateway - freenas configuration
 
 ## freeNAS install 
 1. Create [freeNAS install](https://web.freenas.org/download-freenas-release-112-113/) USB 3.0 Sandisk bootable thumbdrive using [Etcher - download](https://www.balena.io/etcher/k) or [Rufus - download](https://rufus.ie/)
@@ -13,17 +21,7 @@
 4. Pull freeNAS install USB and reboot
     ![netstackFreeNASRemoveUSB](./netstackFreeNASRemoveUSB.png)
 
-
-
 ## freeNAS first pool setup
-
-| Gateway purpose            | IP                                             | Local Domain Name                       |
-|----------------------------|------------------------------------------------|-----------------------------------------|
-| Network Management Gateway | [https://192.168.252.1](https://192.168.252.1) | [https://ng.gh.lan](https://ng.gh.lan)  |
-| Storage Management Gateway | [https://192.168.252.2](https://192.168.252.2) | [https://sg.gh.lan](https://sg.gh.lan)  |
-| Compute Management Gateway | [https://192.168.252.3](https://192.168.252.3) | [https://cg.gh.lan](https://cg.gh.lan)  |
-
-----
 1. Login to freenas (root - yoursecurepassword)
 2. View Dashboard check for any notifications
 3. From FreeNAS Dashboard -> Storage -> Pools -> Add -> Create new pool
