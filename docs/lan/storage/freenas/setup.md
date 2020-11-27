@@ -46,7 +46,7 @@
     - Threshold days: 14
     - Description: Weekly Scrub
 
-## freeNAS SMB Share Dataset Configuration
+## freenas user and groups for grasshorse
 
 Groups
 
@@ -68,6 +68,7 @@ Users
 | ghprouser | 1001 | basic project user template |
 | ghpubuser | 1000 | public share only user template |
 
+## SMB Share Dataset client access
 
 1. Check Status of nspool [Storage - Pools - Gear Status](http://192.168.252.2/ui/storage/pools/status/1)
 2. Add Projects dataset [Storage - Pools -> nspool -> Add Dataset](http:/192.168.128.2/ui/storage/pools/id/nspool/dataset/add/nspool)
@@ -197,34 +198,34 @@ Users
         ```
     - Select and delete the credential
 3. Clear Network Shortcuts
-```
-C:\Users\ghadmin\AppData\Roaming\Microsoft\Windows\Network Shortcuts
-```
+    ```
+    C:\Users\ghadmin\AppData\Roaming\Microsoft\Windows\Network Shortcuts
+    ```
 4. Windows cmd delete all network drive connections
-```
-C:\Users\ghadmin>net use * /delete
-You have these remote connections:
+    ```
+    C:\Users\ghadmin>net use * /delete
+    You have these remote connections:
 
-                    \\sg.gh.lan\projects
-Continuing will cancel the connections.
+                        \\sg.gh.lan\projects
+    Continuing will cancel the connections.
 
-Do you want to continue this operation? (Y/N) [N]: Y
-The command completed successfully.
+    Do you want to continue this operation? (Y/N) [N]: Y
+    The command completed successfully.
 
-C:\Users\ghadmin>
-```
+    C:\Users\ghadmin>
+    ```
 5. Create Network connection with user credentials
-```
-net use \\<server>\<sharename> /USER:<domain>\<username> *
-```
+    ```
+    net use \\<server>\<sharename> /USER:<domain>\<username> *
+    ```
     - tested on catghwin10
-```
-C:\Users\ghadmin>net use \\sg.gh.lan\projects /USER:sg.gh.lan\ghprouser *
-Type the password for \\sg.gh.lan\projects:
-The command completed successfully.
+        ```
+        C:\Users\ghadmin>net use \\sg.gh.lan\projects /USER:sg.gh.lan\ghprouser *
+        Type the password for \\sg.gh.lan\projects:
+        The command completed successfully.
 
-C:\Users\ghadmin>
-```
+        C:\Users\ghadmin>
+        ```
 
 ## Windows 10 bash mount Mounting DrvFs
 In order to mount a Windows drive using DrvFs, you can use the regular Linux mount command. For example, to mount a removable drive D: as /mnt/d directory, run the following commands:
