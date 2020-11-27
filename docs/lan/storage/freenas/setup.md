@@ -157,13 +157,13 @@ Users
 12. Test SMB connectivity on Windows
       - Windows Machine
       - File Browse to: \\192.168.252.2\ or sg.gh.lan
-      - Network credentials: nspubuser - passwordyouset
+      - Network credentials: ghpubuser - passwordyouset
       - Under Network > SG should see Projects and Public
       - Click on Public
       - Should be able to read and write files
       - Click on Project
       - Should NOT be able to access folder
-13. Enable SMB Service [Services - SMB - Edit](http://192.168.252.2/ui/services/smb)a
+13. Enable SMB Service [Services - SMB - Edit](http://192.168.252.2/ui/services/smb)
       - Number of servers: 4 (each takes 1 core)
       - Allow no-root mount: Checked
       - Enable NFSv4: Checked
@@ -196,6 +196,35 @@ Users
         rundll32.exe keymgr.dll, KRShowKeyMgr
         ```
     - Select and delete the credential
+3. Clear Network Shortcuts
+```
+C:\Users\ghadmin\AppData\Roaming\Microsoft\Windows\Network Shortcuts
+```
+4. Windows cmd delete all network drive connections
+```
+C:\Users\ghadmin>net use * /delete
+You have these remote connections:
+
+                    \\sg.gh.lan\projects
+Continuing will cancel the connections.
+
+Do you want to continue this operation? (Y/N) [N]: Y
+The command completed successfully.
+
+C:\Users\ghadmin>
+```
+5. Create Network connection with user credentials
+```
+net use \\<server>\<sharename> /USER:<domain>\<username> *
+```
+    - tested on catghwin10
+```
+C:\Users\ghadmin>net use \\sg.gh.lan\projects /USER:sg.gh.lan\ghprouser *
+Type the password for \\sg.gh.lan\projects:
+The command completed successfully.
+
+C:\Users\ghadmin>
+```
 
 ## Windows 10 bash mount Mounting DrvFs
 In order to mount a Windows drive using DrvFs, you can use the regular Linux mount command. For example, to mount a removable drive D: as /mnt/d directory, run the following commands:
