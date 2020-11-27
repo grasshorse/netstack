@@ -119,36 +119,36 @@ Users
       - Authentication (leave default)
       - SAVE
       - Repeat for nsprouser but with nsprojects as primary group
-7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.2/ui/sharing/smb/add)
-       - Path: /mnt/nspool/Public
-       - Name: Public
-       - Description: netstack Public SMB share
+7. Add Public SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.252.2/ui/sharing/smb/add)
+       - Path: /mnt/nspool/public
+       - Name: public
+       - Description: Grasshorse public SMB share
        - Enabled: yes - checked
        - Time Machine: no
        - Allow Guest Access: no
        - Enable Shadow Copies: yes - checked
        - SAVE
-8. Edit ACL on Public Dataset [Storage - Pools - nspool - Public](http://192.168.128.2/ui/storage/pools/id/nspool/dataset/acl/nspool%2FPublic)
-      - Path: /mnt/nspool/Public
+8. Edit ACL on public Dataset [Storage - Pools - nspool - public](http://192.168.252.2/ui/storage/pools/id/ghpool/dataset/acl/nspool%2Fpublic)
+      - Path: /mnt/ghpool/public
       - User: root (default)
-      - Group: nspublic (select from pulldown)
+      - Group: ghpublic (select from pulldown)
       - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
       - Default ACL Options: OPEN
       - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
       - Save
-9. Add Projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.128.2/ui/sharing/smb/add)
-       - Path: /mnt/nspool/Projects
-       - Name: Projects
-       - Description: netstack Projects
+9. Add projects SMB share [ Sharing - Windows Shares (SMB) - Add](http://192.168.252.2/ui/sharing/smb/add)
+       - Path: /mnt/ghpool/projects
+       - Name: projects
+       - Description: Grasshorse projects
        - Enabled: yes - checked
        - Time Machine: no
        - Allow Guest Access: no
        - Enable Shadow Copies: yes - checked
        - SAVE
-10. Edit ACL on Public Dataset [Storage - Pools - nspool - Projects](http://192.168.128.2/ui/storage/pools/id/nspool/dataset/acl/nspool%2FProjects)
-  - Path: /mnt/nspool/Projects
+10. Edit ACL on Public Dataset [Storage - Pools - ghpool - projects](http://192.168.252.2/ui/storage/pools/id/ghpool/dataset/acl/ghpool%2Fprojects)
+  - Path: /mnt/nspool/projects
   - User: root (default)
-  - Group: nsprojects (select from pulldown)
+  - Group: ghprojects (select from pulldown)
   - Apply Group: yes - Checked (need to check this to apply the group or it will not change)
   - Default ACL Options: RESTRICTED
   - Apply Permissions Recursively: yes - Checked (good habbit when changing directories)
@@ -156,14 +156,14 @@ Users
 11. RESTART SMB Service 
 12. Test SMB connectivity on Windows
       - Windows Machine
-      - File Browse to: \\192.168.128.2\ or sg.ns.lan
+      - File Browse to: \\192.168.252.2\ or sg.gh.lan
       - Network credentials: nspubuser - passwordyouset
       - Under Network > SG should see Projects and Public
       - Click on Public
       - Should be able to read and write files
       - Click on Project
       - Should NOT be able to access folder
-13. Enable SMB Service [Services - SMB - Edit](http://192.168.128.2/ui/services/smb)a
+13. Enable SMB Service [Services - SMB - Edit](http://192.168.252.2/ui/services/smb)a
       - Number of servers: 4 (each takes 1 core)
       - Allow no-root mount: Checked
       - Enable NFSv4: Checked
@@ -171,7 +171,7 @@ Users
 
 ## Windows 10 SMB Share browse
 1. Open File Explorer
-2. Type "\\sg.ns.lan" (or \\192.168.128.2) into path bar
+2. Type "\\sg.gh.lan" (or \\192.168.252.2) into path bar
 3. Windows should request credentials
 4. With correct credentials, File Explorer will display all datasets associated with server
 
