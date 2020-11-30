@@ -199,6 +199,23 @@ Users
     ```
     C:\Users\ghadmin\AppData\Roaming\Microsoft\Windows\Network Shortcuts
     ```
+4. Windows cmd to list all network drive connections
+    ```
+    C:\Users\ghadmin>net use
+    New connections will be remembered.
+
+
+    Status       Local     Remote                    Network
+
+    -------------------------------------------------------------------------------
+    OK                     \\192.168.254.6\synctest  Microsoft Windows Network
+    OK                     \\sg.gh.lan\projects      Microsoft Windows Network
+    OK                     \\sg.gh.lan\synctest      Microsoft Windows Network
+    The command completed successfully.
+
+
+    C:\Users\ghadmin>
+    ```
 4. Windows cmd delete all network drive connections
     ```
     C:\Users\ghadmin>net use * /delete
